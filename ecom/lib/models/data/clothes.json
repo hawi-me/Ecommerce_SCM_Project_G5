@@ -1,0 +1,44 @@
+[
+  {
+      "id": 7,
+      "category": "clothes",
+      "name": "T-shirt",
+      "price": 20,
+      "image": "https://img.freepik.com/free-photo/man-wearing-blank-shirt_23-2149347484.jpg?semt=ais_hybrid"
+  },
+  {
+      "id": 8,
+      "category": "clothes",
+      "name": "Jacket",
+      "price": 100,
+      "image": "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150478984.jpg?semt=ais_hybrid"
+  },
+  {
+      "id": 9,
+      "category": "clothes",
+      "name": "Jeans",
+      "price": 50,
+      "image": "https://img.freepik.com/premium-photo/shorts-with-top-bijouterie-mannequin-female-summer-outfit-light-apparel-warm-season-follow-trend_274234-7006.jpg?semt=ais_hybrid"
+  },
+  {
+      "id": 10,
+      "category": "clothes",
+      "name": "Sweater",
+      "price": 60,
+      "image": "https://img.freepik.com/free-photo/still-life-rendering-jackets-display_23-2149745033.jpg?semt=ais_hybrid"
+  },
+  {
+      "id": 11,
+      "category": "clothes",
+      "name": "Hat",
+      "price": 25,
+      "image": "https://img.freepik.com/free-photo/still-life-rendering-jackets-display_23-2149745029.jpg?semt=ais_hybrid"
+  },
+  {
+      "id": 12,
+      "category": "clothes",
+      "name": "Dress",
+      "price": 80,
+      "image": "https://img.freepik.com/free-photo/graphic-tshirt-trendy-design-mockup-presented-wooden-hanger_460848-13983.jpg?semt=ais_hybrid"
+  }
+]

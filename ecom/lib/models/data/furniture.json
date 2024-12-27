@@ -1,0 +1,44 @@
+[
+  {
+      "id": 1,
+      "category": "furniture",
+      "name": "Sofa",
+      "price": 500,
+      "image": "https://cdn.thewirecutter.com/wp-content/media/2024/11/runningshoes-2048px-09528.jpg"
+  },
+  {
+      "id": 2,
+      "category": "furniture",
+      "name": "Dining Table",
+      "price": 300,
+      "image": "https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg"
+  },
+  {
+      "id": 3,
+      "category": "furniture",
+      "name": "Bed Frame",
+      "price": 400,
+      "image": "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg"
+  },
+  {
+      "id": 4,
+      "category": "furniture",
+      "name": "Bookshelf",
+      "price": 150,
+      "image": "https://images.pexels.com/photos/276678/pexels-photo-276678.jpeg"
+  },
+  {
+      "id": 5,
+      "category": "furniture",
+      "name": "Office Chair",
+      "price": 120,
+      "image": "https://img.freepik.com/premium-photo/couch-with-orange-pillows-black-pillow-it_627050-622.jpg?semt=ais_hybrid"
+  },
+  {
+      "id": 6,
+      "category": "furniture",
+      "name": "Coffee Table",
+      "price": 200,
+      "image": "https://img.freepik.com/free-photo/mid-century-modern-living-room-interior-design-with-monstera-tree_53876-129805.jpg?semt=ais_hybrid"
+  }
+]

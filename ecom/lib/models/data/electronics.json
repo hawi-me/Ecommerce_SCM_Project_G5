@@ -1,0 +1,44 @@
+[
+    {
+        "id": 19,
+        "category": "electronics",
+        "name": "Smartphone",
+        "price": 800,
+        "image": "https://img.freepik.com/free-photo/elegant-smartphone-composition_23-2149437106.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 20,
+        "category": "electronics",
+        "name": "Laptop",
+        "price": 1200,
+        "image": "https://img.freepik.com/free-photo/still-life-books-versus-technology_23-2150062920.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 21,
+        "category": "electronics",
+        "name": "Smartwatch",
+        "price": 250,
+        "image": "https://img.freepik.com/free-photo/smartwatch-screen-digital-device_53876-96810.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 22,
+        "category": "electronics",
+        "name": "Headphones",
+        "price": 150,
+        "image": "https://img.freepik.com/free-photo/headphones-audio-listen_1203-7566.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 23,
+        "category": "electronics",
+        "name": "Tablet",
+        "price": 600,
+        "image": "https://img.freepik.com/free-photo/flat-lay-tablet-with-minimal-display_23-2149672640.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 24,
+        "category": "electronics",
+        "name": "Camera",
+        "price": 900,
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlaNCW0yOj9_xBVbJGCrvEjN86JurluJjUXrqiDCw0YwcqMa8kcooCjs-nhS8G67QNTig&usqp=CAU"
+    }
+]

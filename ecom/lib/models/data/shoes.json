@@ -1,0 +1,46 @@
+
+[
+    {
+        "id": 13,
+        "category": "shoes",
+        "name": "Running Shoes",
+        "price": 120,
+        "image": "https://cdn.thewirecutter.com/wp-content/media/2024/11/runningshoes-2048px-09528.jpg"
+    },
+    {
+        "id": 14,
+        "price": 150,
+        "category": "shoes",
+        "name": "Boots",
+
+        "image": "https://img.freepik.com/free-photo/men-shoes_1203-8442.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 15,
+        "category": "shoes",
+        "name": "Sandals",
+        "price": 30,
+        "image": "https://img.freepik.com/free-photo/men-leather-sandal-flip-flop-shoes_1203-7702.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 16,
+        "category": "shoes",
+        "name": "Formal Shoes",
+        "price": 200,
+        "image": "https://img.freepik.com/free-photo/brown-shoes-isolated-white-background-studio_268835-1354.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 17,
+        "category": "shoes",
+        "name": "Slippers",
+        "price": 20,
+        "image": "https://img.freepik.com/free-photo/leather-shoes-sandal_1203-7616.jpg?semt=ais_hybrid"
+    },
+    {
+        "id": 18,
+        "category": "shoes",
+        "name": "Sneakers",
+        "price": 100,
+        "image": "https://img.freepik.com/free-photo/pair-trainers_144627-3799.jpg?semt=ais_hybrid"
+    }
+]
