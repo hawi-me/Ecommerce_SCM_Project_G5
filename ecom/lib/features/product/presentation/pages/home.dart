@@ -233,72 +233,73 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Expanded(child: hp()),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.052,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Available Products",
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-            // Products
+            // Container(
+            //   height: MediaQuery.of(context).size.height * 0.052,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         "Available Products",
+            //         style: TextStyle(
+            //             fontFamily: "Poppins",
+            //             color: Theme.of(context).colorScheme.onSurface,
+            //             fontSize: 24,
+            //             fontWeight: FontWeight.w600),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // // Products
+
             SizedBox(
               height: 11,
             ),
 
-            BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                if (state is HomeLoading) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is HomeFailure) {
-                  return SnackBar(
-                    content: Text(state.message),
-                  );
-                } else if (state is HomeLoaded) {
-                  return Expanded(
-                    child: SizedBox(
-                      child: SingleChildScrollView(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          child: RefreshIndicator(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            onRefresh: _refresh,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 75),
-                              child: ListView.builder(
-                                itemCount: state.products.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          '/detail',
-                                          arguments: state.products[index],
-                                        );
-                                      },
-                                      child: OverflowCard(
-                                        product: state.products[index],
-                                      ));
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Container(); // Add a return statement at the end
-              },
-            ),
+            // BlocBuilder<HomeBloc, HomeState>(
+            //   builder: (context, state) {
+            //     if (state is HomeLoading) {
+            //       return Center(child: CircularProgressIndicator());
+            //     } else if (state is HomeFailure) {
+            //       return SnackBar(
+            //         content: Text(state.message),
+            //       );
+            //     } else if (state is HomeLoaded) {
+            //       return Expanded(
+            //         child: SizedBox(
+            //           child: SingleChildScrollView(
+            //             child: SizedBox(
+            //               height: MediaQuery.of(context).size.height * 0.8,
+            //               child: RefreshIndicator(
+            //                 color: Theme.of(context).colorScheme.onSurface,
+            //                 onRefresh: _refresh,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.only(bottom: 75),
+            //                   child: ListView.builder(
+            //                     itemCount: state.products.length,
+            //                     itemBuilder: (context, index) {
+            //                       return GestureDetector(
+            //                           onTap: () {
+            //                             Navigator.pushNamed(
+            //                               context,
+            //                               '/detail',
+            //                               arguments: state.products[index],
+            //                             );
+            //                           },
+            //                           child: OverflowCard(
+            //                             product: state.products[index],
+            //                           ));
+            //                     },
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       );
+            //     }
+            //     return Container(); // Add a return statement at the end
+            //   },
+            // ),
           ],
         ),
       )),
