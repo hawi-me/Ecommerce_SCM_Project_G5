@@ -12,14 +12,37 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   final List<Map<String, dynamic>> cart = [];
+  int quantity = 1;
 
   void addToCart(Map<String, dynamic> product) {
-    setState(() {
-      cart.add(product);
-    });
+    final existingProduct =
+        cart.indexWhere((item) => item['id'] == product['id']);
+    if (existingProduct != -1) {
+      setState(() {
+        cart[existingProduct]['quantity'] += quantity;
+      });
+    } else {
+      setState(() {
+        cart.add({...product, 'quantity': quantity});
+      });
+    }
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Added to Cart')),
     );
+  }
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+      });
+    }
   }
 
   @override
@@ -63,6 +86,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               style: const TextStyle(fontSize: 16),
             ),
             const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: decrementQuantity,
+                  icon: const Icon(Icons.remove),
+                ),
+                Text(
+                  quantity.toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+                IconButton(
+                  onPressed: incrementQuantity,
+                  icon: const Icon(Icons.add),
+                ),
+              ],
+            ),
             ElevatedButton(
               onPressed: () {
                 addToCart(widget.product);
