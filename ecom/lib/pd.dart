@@ -87,46 +87,60 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
             const Spacer(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  onPressed: decrementQuantity,
-                  icon: const Icon(Icons.remove),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: decrementQuantity,
+                      icon: const Icon(Icons.remove),
+                    ),
+                    Text(
+                      quantity.toString(),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    IconButton(
+                      onPressed: incrementQuantity,
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
                 ),
-                Text(
-                  quantity.toString(),
-                  style: const TextStyle(fontSize: 20),
-                ),
-                IconButton(
-                  onPressed: incrementQuantity,
-                  icon: const Icon(Icons.add),
+                ElevatedButton(
+                  onPressed: () {
+                    addToCart(widget.product);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(cart: cart),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16.0,
+                      horizontal: 24.0,
+                    ),
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.shopping_cart, color: Colors.white),
+                      SizedBox(width: 10),
+                      Text(
+                        'Add to Cart',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ),
-            ElevatedButton(
-              onPressed: () {
-                addToCart(widget.product);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CartPage(cart: cart),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Icon(Icons.shopping_cart),
-                  SizedBox(width: 8),
-                  Text('Add to Cart'),
-                ],
-              ),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                backgroundColor: Colors.black,
-                maximumSize: Size(250, 120),
-                textStyle: const TextStyle(fontSize: 18),
-              ),
             ),
           ],
         ),
