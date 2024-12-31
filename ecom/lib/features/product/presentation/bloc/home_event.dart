@@ -18,3 +18,12 @@ class SearchProductsEvent extends HomeEvent {
   @override
   List<Object> get props => [searchTerm];
 }
+
+class FilterByCategoryEvent extends HomeEvent {
+  final String category;
+  
+  FilterByCategoryEvent(this.category);
+  
+  @override
+  List<Object> get props => [category];
+}

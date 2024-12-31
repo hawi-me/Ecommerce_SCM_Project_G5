@@ -45,264 +45,157 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String selectedCategory = 'All';
+  
   @override
   Widget build(BuildContext context) {
-    Future<void> _refresh() async {
-      context.read<HomeBloc>().add(GetProductsEvent());
-      context.read<GetUserBloc>().add(GetUserInfoEvent());
-      var shared_preferences = await SharedPreferences.getInstance();
-
-      return Future.delayed(Duration(seconds: 3));
-    }
-
-    Future<void> save_id(String id) async {
-      var shared_preferences = await SharedPreferences.getInstance();
-      var save_id = shared_preferences.setString('id', id);
-    }
-
-    const maxNum = 10.0;
     return Scaffold(
       bottomNavigationBar: Container(child: Bottomnavbar()),
       backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 70.0, //remove pushnamed navigate back button
-
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          // color: Colors.white,
-          child: Row(
-            children: [
-              Row(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          flexibleSpace: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // -----the box
-                  Container(
-                    // color: Colors.red,
-                    margin: EdgeInsets.only(top: 4),
-                    child: SizedBox(
-                        width: 70, height: 70, child: ImagePickerIconButton()),
-                  ),
-
-                  // -------the day
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/logout');
-                    },
-                    child: Container(
-                      // color: Colors.purple,
-                      padding: EdgeInsets.only(top: 4, left: 10),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'July 31, 2024',
-                              style: GoogleFonts.syne(
-                                textStyle: TextStyle(
-                                  color: Color.fromRGBO(170, 170, 170, 1),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            Row(children: [
-                              Text(
-                                'Hello,',
-                                style: GoogleFonts.sora(
-                                  textStyle: TextStyle(
-                                    color: Color.fromRGBO(102, 102, 102, 1),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              BlocBuilder<GetUserBloc, GetUserState>(
-                                builder: (context, state) {
-                                  if (state is GetUserLoading) {
-                                    return Text(" ",
-                                        style: GoogleFonts.sora(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15));
-                                  } else if (state is GetUserLoaded) {
-                                    return Text("${state.user.name}",
-                                        style: GoogleFonts.sora(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15,
-                                          // color: Theme.of(context)
-                                          //     .colorScheme
-                                          //     .onSurface,
-                                        ));
-                                  } else {
-                                    return Text('name');
-                                  }
-                                },
-                              ),
-                            ])
-                          ]),
-                    ),
-                  ),
+                  _buildUserProfile(),
+                  _buildAppBarActions(),
                 ],
               ),
-
-              // ------------the last 2 icons--------
-              Spacer(),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // --------DARKMODE TOGGLE
-                  Container(
-                    margin: EdgeInsets.only(right: 15),
-                    child: GestureDetector(
-                      onTap: () {
-                        Provider.of<ThemeProvider>(context, listen: false)
-                            .toggleTheme();
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 7),
-                        child: Icon(
-                          Provider.of<ThemeProvider>(context).themeData ==
-                                  darkmode
-                              ? Icons.wb_sunny // Sun icon for light mode
-                              : Icons
-                                  .nights_stay_outlined, // Moon icon for dark mode
-                          size: 30,
-                          // color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(right: 15),
-                    child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(
-                                      "Are you sure you want to logout ?",
-                                      style: GoogleFonts.poppins(fontSize: 15),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Cancel")),
-                                      TextButton(
-                                          onPressed: () {
-                                            logOut();
-                                            Navigator.pushNamedAndRemoveUntil(
-                                                context,
-                                                '/login',
-                                                (route) => true);
-                                          },
-                                          child: Text("Log-Out"))
-                                    ],
-                                  ));
-                        },
-                        child: Icon(
-                          Icons.logout_outlined,
-                          color: Colors.red,
-                        )),
-                  )
-
-                  // -----------chat icon------
-                  // Container(
-                  //     // color: Colors.yellow,
-                  //     child: GestureDetector(
-                  //         onTap: () {
-                  //           Navigator.pushNamed(context, '/HomeChat');
-                  //         },
-                  //         child: Transform.rotate(
-                  //           angle: 5.5,
-                  //           child: Icon(
-                  //             Icons.send_rounded,
-                  //             size: 30,
-                  //           ),
-                  //         ))),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),
-      body: SafeArea(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<HomeBloc>().add(GetProductsEvent());
+          context.read<GetUserBloc>().add(GetUserInfoEvent());
+        },
+        child: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.only(left: 21.0, right: 21.0),
-        child: Column(
-          children: [
-            Expanded(child: hp()),
-            // Container(
-            //   height: MediaQuery.of(context).size.height * 0.052,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         "Available Products",
-            //         style: TextStyle(
-            //             fontFamily: "Poppins",
-            //             color: Theme.of(context).colorScheme.onSurface,
-            //             fontSize: 24,
-            //             fontWeight: FontWeight.w600),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // // Products
-
-            SizedBox(
-              height: 11,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSearchBar(),
+                SizedBox(height: 20),
+                _buildCategories(),
+                SizedBox(height: 20),
+                _buildProductGrid(),
+              ],
             ),
-
-            // BlocBuilder<HomeBloc, HomeState>(
-            //   builder: (context, state) {
-            //     if (state is HomeLoading) {
-            //       return Center(child: CircularProgressIndicator());
-            //     } else if (state is HomeFailure) {
-            //       return SnackBar(
-            //         content: Text(state.message),
-            //       );
-            //     } else if (state is HomeLoaded) {
-            //       return Expanded(
-            //         child: SizedBox(
-            //           child: SingleChildScrollView(
-            //             child: SizedBox(
-            //               height: MediaQuery.of(context).size.height * 0.8,
-            //               child: RefreshIndicator(
-            //                 color: Theme.of(context).colorScheme.onSurface,
-            //                 onRefresh: _refresh,
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.only(bottom: 75),
-            //                   child: ListView.builder(
-            //                     itemCount: state.products.length,
-            //                     itemBuilder: (context, index) {
-            //                       return GestureDetector(
-            //                           onTap: () {
-            //                             Navigator.pushNamed(
-            //                               context,
-            //                               '/detail',
-            //                               arguments: state.products[index],
-            //                             );
-            //                           },
-            //                           child: OverflowCard(
-            //                             product: state.products[index],
-            //                           ));
-            //                     },
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       );
-            //     }
-            //     return Container(); // Add a return statement at the end
-            //   },
-            // ),
-          ],
+          ),
         ),
-      )),
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Theme.of(context).colorScheme.outline.withOpacity(0.5)),
+      ),
+      child: TextField(
+        onChanged: (value) {
+          context.read<HomeBloc>().add(SearchProductsEvent(value));
+        },
+        decoration: InputDecoration(
+          hintText: 'Search products...',
+          border: InputBorder.none,
+          icon: Icon(Icons.search),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategories() {
+    final categories = ['All', 'Electronics', 'Furniture', 'Clothes', 'Shoes'];
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Categories',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(height: 12),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: categories.map((category) => _buildCategoryChip(category)).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCategoryChip(String category) {
+    final isSelected = selectedCategory == category;
+    
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCategory = category;
+        });
+        // Add category filter logic here
+        context.read<HomeBloc>().add(FilterByCategoryEvent(category));
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 8),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline,
+          ),
+        ),
+        child: Text(
+          category,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProductGrid() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is HomeLoaded) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.75,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: state.products.length,
+            itemBuilder: (context, index) {
+              final product = state.products[index];
+              return _buildProductCard(product);
+            },
+          );
+        }
+        return Container();
+      },
     );
   }
 }

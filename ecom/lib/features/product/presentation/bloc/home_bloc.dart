@@ -63,6 +63,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomeLoaded(filteredProducts));
       }
     });
+
+    on<FilterByCategoryEvent>((event, emit) {
+      if (state is HomeLoaded) {
+        final currentState = state as HomeLoaded;
+        if (event.category == 'All') {
+          emit(HomeLoaded(_allProducts));
+        } else {
+          final filteredProducts = _allProducts.where((product) {
+            return product.category.toLowerCase() == event.category.toLowerCase();
+          }).toList();
+          emit(HomeLoaded(filteredProducts));
+        }
+      }
+    });
   }
 }
 
